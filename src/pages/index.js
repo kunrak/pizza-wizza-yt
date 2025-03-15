@@ -1,3 +1,4 @@
+import CarouselComponent from "@/components/home/Carousel";
 import { Geist, Geist_Mono } from "next/font/google";
 
 const geistSans = Geist({
@@ -12,8 +13,8 @@ const geistMono = Geist_Mono({
 
 export default function Home() {
   return (
-    <div>
-      Hello World
-    </div>
+    <>
+      <CarouselComponent />
+    </>
   );
 }
