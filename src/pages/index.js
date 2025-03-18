@@ -1,3 +1,4 @@
+import Card from "@/components/home/Card";
 import CarouselComponent from "@/components/home/Carousel";
 import { Geist, Geist_Mono } from "next/font/google";
 
@@ -15,6 +16,7 @@ export default function Home() {
   return (
     <>
       <CarouselComponent />
+      <Card />
     </>
   );
 }
