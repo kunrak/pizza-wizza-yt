@@ -1,9 +1,25 @@
 import Image from "next/image";
-import React from "react";
+import React, { useContext, useState } from "react";
 
-const priceOptions = ["regular", "medium", "large"];
+// const priceOptions = ["regular", "medium", "large"];
 
-function Card() {
+function Card(props) {
+  const data = props.foodData;
+  const priceOptions = Object.keys(data.price);
+
+  const [qty, setQty] = useState(1);
+  const [size, setSize] = useState(priceOptions[0]);
+
+  const handleQty = (e) => {
+    setQty(e.target.value);
+  };
+
+  const handleSize = (e) => {
+    setSize(e.target.value);
+  };
+
+  let finalPrice = qty * parseInt(data.price[size]);
+
   return (
     <div className="box">
       <div className="w-80 rounded-lg bg-white overflow-hidden dark:bg-black border-gradient">
@@ -16,9 +32,9 @@ function Card() {
           />
         </div>
         <div className="p-4">
-          <div className="font-bold mb-2 text-xl uppercase">Pizza Name</div>
+          <div className="font-bold mb-2 text-xl uppercase">{data.name}</div>
           <p className="short_description text-gray-700 dark:text-gray-400 text-base">
-            Description
+            {data.description}
           </p>
         </div>
         <div className="flex px-4 justify-between">
@@ -26,6 +42,7 @@ function Card() {
             name=""
             id=""
             className="h-10 p-1 text-black hover:font-bold font-semibold cursor-pointer dark:text-gray-300 border border-black dark:border-gray-400 rounded"
+            onChange={handleQty}
           >
             {Array.from(Array(6), (e, i) => {
               return (
@@ -35,10 +52,13 @@ function Card() {
               );
             })}
           </select>
-          <select className="h-10 p-1 text-black hover:font-bold font-semibold cursor-pointer dark:text-gray-300 border border-black dark:border-gray-400 rounded">
-            {priceOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
+          <select
+            className="h-10 p-1 text-black hover:font-bold font-semibold cursor-pointer dark:text-gray-300 border border-black dark:border-gray-400 rounded"
+            onChange={handleSize}
+          >
+            {priceOptions.map((options) => (
+              <option key={options} value={options}>
+                {options}
               </option>
             ))}
           </select>
@@ -47,7 +67,7 @@ function Card() {
           <button className="border dark:border-gray-400 border-gray-900 rounded p-2 hover:bg-gradient-to-r from-indigo-700 via-violet-700 to-orange-700 hover:text-gray-100">
             Add to cart
           </button>
-          <p className="p-2 text-xl">Final Price</p>
+          <p className="p-2 text-xl">₹{finalPrice}/-</p>
         </div>
       </div>
     </div>
