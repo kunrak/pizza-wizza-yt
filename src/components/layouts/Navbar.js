@@ -1,9 +1,11 @@
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
+import { CartContext } from "@/utils/ContextReducer";
 
 function Navbar() {
+  const { state } = useContext(CartContext);
   const { theme, setTheme } = useTheme();
   return (
     <header className="text-white-100 sticky top-0 z-50 bg-gradient-to-r from-indigo-700 via-violet-700 to-orange-700 body-font">
@@ -37,7 +39,7 @@ function Navbar() {
               />
             </svg>
             <span className="inline-flex items-center bg-red-50 py-1 px-2 rounded-full text-xs font-medium text-red-600 ring-1 shadow-[0_0_15px_1px_rgba(220,38,38)]  ring-inset ring-red-600/10">
-              0
+              {state.length}
             </span>
           </Link>
           <Link
@@ -72,6 +74,7 @@ function Navbar() {
               viewBox="0 0 24 24"
               stroke="currentColor"
               stroke-width="1.5"
+              strokeWidth="1.5"
             >
               <path
                 stroke-linecap="round"
