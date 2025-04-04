@@ -1,12 +1,11 @@
+import { CartContext } from "@/utils/ContextReducer";
 import Image from "next/image";
 import React, { useContext, useState } from "react";
 
-// const priceOptions = ["regular", "medium", "large"];
-
 function Card(props) {
   const data = props.foodData;
+  const { state, dispatch } = useContext(CartContext);
   const priceOptions = Object.keys(data.price);
-
   const [qty, setQty] = useState(1);
   const [size, setSize] = useState(priceOptions[0]);
 
@@ -16,6 +15,32 @@ function Card(props) {
 
   const handleSize = (e) => {
     setSize(e.target.value);
+  };
+
+  const handleAddToCart = async () => {
+    const updateItem = await state.find(
+      (item) => item.tempId === data.id + size
+    );
+    if (!updateItem) {
+      dispatch({
+        type: "ADD",
+        id: data.id,
+        tempId: data.id + size,
+        name: data.name,
+        price: finalPrice,
+        qty: qty,
+        priceOption: size,
+        img: data.img,
+      });
+    }
+    if (updateItem) {
+      dispatch({
+        type: "UPDATE",
+        tempId: data.id + size,
+        price: finalPrice,
+        qty: qty,
+      });
+    }
   };
 
   let finalPrice = qty * parseInt(data.price[size]);
@@ -64,7 +89,10 @@ function Card(props) {
           </select>
         </div>
         <div className="flex p-4 font-bold justify-between">
-          <button className="border dark:border-gray-400 border-gray-900 rounded p-2 hover:bg-gradient-to-r from-indigo-700 via-violet-700 to-orange-700 hover:text-gray-100">
+          <button
+            onClick={handleAddToCart}
+            className="border dark:border-gray-400 border-gray-900 rounded p-2 hover:bg-gradient-to-r from-indigo-700 via-violet-700 to-orange-700 hover:text-gray-100"
+          >
             Add to cart
           </button>
           <p className="p-2 text-xl">₹{finalPrice}/-</p>
