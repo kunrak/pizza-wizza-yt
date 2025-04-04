@@ -1,11 +1,9 @@
 import { CartContext } from "@/utils/ContextReducer";
-import { CartContext } from "@/utils/ContextReducer";
 import Image from "next/image";
 import React, { useContext, useState } from "react";
 
 function Card(props) {
   const data = props.foodData;
-  const { state, dispatch } = useContext(CartContext);
   const { state, dispatch } = useContext(CartContext);
   const priceOptions = Object.keys(data.price);
   const [qty, setQty] = useState(1);
@@ -52,7 +50,8 @@ function Card(props) {
       <div className="w-80 rounded-lg bg-white overflow-hidden dark:bg-black border-gradient">
         <div className="relative w-full h-80">
           <Image
-            src="https://www.dominos.co.in/files/items/Farmhouse.jpg"
+            // src="https://www.dominos.co.in/files/items/Farmhouse.jpg"
+            src={data.img}
             layout="fill"
             objectFit="cover"
             alt="Pizza"
@@ -91,10 +90,6 @@ function Card(props) {
           </select>
         </div>
         <div className="flex p-4 font-bold justify-between">
-          <button
-            onClick={handleAddToCart}
-            className="border dark:border-gray-400 border-gray-900 rounded p-2 hover:bg-gradient-to-r from-indigo-700 via-violet-700 to-orange-700 hover:text-gray-100"
-          >
           <button
             onClick={handleAddToCart}
             className="border dark:border-gray-400 border-gray-900 rounded p-2 hover:bg-gradient-to-r from-indigo-700 via-violet-700 to-orange-700 hover:text-gray-100"
