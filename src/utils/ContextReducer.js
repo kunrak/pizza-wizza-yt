@@ -11,11 +11,16 @@ const reducer = (state, action) => {
           name: action.name,
           price: action.price,
           qty: action.qty,
+<<<<<<< HEAD
           size: action.priceOption,
+=======
+          size: action.priceOptions,
+>>>>>>> 1ad43dcdc4aa653e66e312b953938121f17ed4ae
           img: action.img,
         },
       ];
 
+<<<<<<< HEAD
       case "UPDATE":
         let arr = [...state];
         arr.find((food, index) => {
@@ -28,6 +33,20 @@ const reducer = (state, action) => {
           }
         });
         return arr;
+=======
+    case "UPDATE":
+      let arr = [...state];
+      arr.find((food, index) => {
+        if (food.tempId === action.tempId) {
+          arr[index] = {
+            ...food,
+            qty: action.qty + food.qty,
+            price: action.price + food.price,
+          };
+        }
+      });
+      return arr;
+>>>>>>> 1ad43dcdc4aa653e66e312b953938121f17ed4ae
 
     case "INCREMENT":
       let incArr = [...state];
@@ -60,9 +79,12 @@ const reducer = (state, action) => {
       newArr.splice(action.index, 1);
       return newArr;
 
+<<<<<<< HEAD
     case "DROP":
       return [];
 
+=======
+>>>>>>> 1ad43dcdc4aa653e66e312b953938121f17ed4ae
     default:
       console.log("Action Type");
   }
