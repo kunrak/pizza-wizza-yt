@@ -19,13 +19,13 @@ function Card(props) {
 
   const handleAddToCart = async () => {
     const updateItem = await state.find(
-      (item) => item.tempId === data.id + size
+      (item) => item.tempId === data["_id"] + size
     );
     if (!updateItem) {
       dispatch({
         type: "ADD",
-        id: data.id,
-        tempId: data.id + size,
+        id: data["_id"],
+        tempId: data["_id"] + size,
         name: data.name,
         price: finalPrice,
         qty: qty,
@@ -36,7 +36,7 @@ function Card(props) {
     if (updateItem) {
       dispatch({
         type: "UPDATE",
-        tempId: data.id + size,
+        tempId: data["_id"] + size,
         price: finalPrice,
         qty: qty,
       });

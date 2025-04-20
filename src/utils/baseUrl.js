@@ -1,0 +1,1 @@
+export const baseUrl = process.env.NODE_ENV === "production" ? "https://foodie-nextjs.vercel.app/" : "http://localhost:3000/";

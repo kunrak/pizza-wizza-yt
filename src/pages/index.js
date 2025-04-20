@@ -1,8 +1,9 @@
 import Card from "@/components/home/Card";
 import CarouselComponent from "@/components/home/Carousel";
 import { Geist, Geist_Mono } from "next/font/google";
-import cardData from "@/store/cardData.json";
+// import cardData from "@/store/cardData.json";
 import { useEffect, useState } from "react";
+import { baseUrl } from "@/utils/baseUrl";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,17 +15,37 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export default function Home() {
+/**
+ * Renders the main home page of the application.
+ * Displays a carousel and a list of food items categorized and filtered by type.
+ * Users can filter food items by category and food type (Veg/Non-Veg).
+ * Retrieves food data from a JSON file and organizes it into categories.
+ */
+
+export default function Home({data}) {  
   let categories = new Set();
   let catergoryArray;
   const [typeFilter, setTypeFilter] = useState(false);
   const foodData = [];
 
+  /**
+   * Maps over the cardData JSON array and pushes each item into the foodData array.
+   * Also adds each item's category to the categories Set.
+   */
   const handleData = () => {
-    cardData.map((data) => {
+    data?.map((data) => {
       return foodData.push(data), categories.add(data.category);
     });
   };
+
+  const dummy = async () => {
+    const food = await fetch("/api/foodData", {method: 'GET'}).then((res) => res.json());
+    console.log(food);    
+  }
+
+  useEffect(() => {
+    dummy();
+  }, []);
 
   handleData();
 
@@ -100,4 +121,23 @@ export default function Home() {
       </div>
     </>
   );
+}
+
+export async function getStaticProps() {
+  let data;
+
+  try {
+    const pizzaData = await fetch(baseUrl + "api/foodData", {method: 'GET'})
+        .then((response) => response.json()).catch((error) => error.message);
+
+        data = await JSON.parse(JSON.stringify(pizzaData));  //steps reuired during deployment in staticProps
+  } catch (error) {
+    console.error(error.message);
+  }
+
+  return {
+    props: {
+      data: data.data || null,
+    }
+  }
 }
