@@ -1,6 +1,7 @@
 import Card from "@/components/home/Card";
 import CarouselComponent from "@/components/home/Carousel";
 import { Geist, Geist_Mono } from "next/font/google";
+import Head from "next/head";
 // import cardData from "@/store/cardData.json";
 import { useEffect, useState } from "react";
 import { baseUrl } from "@/utils/baseUrl";
@@ -53,6 +54,9 @@ export default function Home({data}) {
 
   return (
     <>
+    <Head>
+      <title>PizzaWizza</title>
+    </Head>
       <CarouselComponent />
       <div className="container mx-auto">
         <div className="my-6 space-x-5">
