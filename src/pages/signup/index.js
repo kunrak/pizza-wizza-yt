@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 function Signup() {
+  const router = useRouter();
   const [credentials, setCredentials] = useState({
     name: "",
     username: "",
@@ -9,8 +11,30 @@ function Signup() {
     geolocation: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const response = await fetch("/api/userSignup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: credentials.name,
+        email: credentials.email,
+        password: credentials.password,
+        location: credentials.geolocation,
+      }),
+    })
+    const res = response.json();
+    if (res.success) {
+      localStorage.setItem("token", res.authToken);
+      localStorage.setItem("userEmail", credentials.email);
+      router.push("/");
+      alert("Account created successfully");
+    } else {
+      alert("Please enter valid credentials");
+    }
   };
 
   const handleChange = (e) => {
@@ -105,7 +129,7 @@ function Signup() {
           <div className="flex items-center justify-between"></div>
           <button
             type="submit"
-            className="border font-bold dark:border-gray-400 border-gray-900 rounded mr-2 p-2 hover:bg-gradient-to-r from-indigo-700 via-violet-700 to-orange-700 hover:text-gray-100"
+            className="border font-bold dark:border-gray-400 border-gray-900 rounded mr-2 `p`-2 hover:bg-gradient-to-r from-indigo-700 via-violet-700 to-orange-700 hover:text-gray-100"
           >
             Signup
           </button>
