@@ -1,12 +1,20 @@
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "@/utils/ContextReducer";
 
 function Navbar() {
+  const [mounted, setMounted] = useState(false);
   const { state } = useContext(CartContext);
   const { theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
     <header className="text-white-100 sticky top-0 z-50 bg-gradient-to-r from-indigo-700 via-violet-700 to-orange-700 body-font">
       <div className="container mx-auto flex flex-wrap p-3 flex-col md:flex-row items-center">
