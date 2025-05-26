@@ -30,7 +30,7 @@ function Card(props) {
         name: data.name,
         price: finalPrice,
         qty: qty,
-        priceOption: size,
+        priceOptions: size,
         img: data.img,
       });
     }
