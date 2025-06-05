@@ -14,8 +14,9 @@ function CarouselComponent() {
       emulateTouch
       showThumbs={false}
     >
-      {imageProp.map((image) => (
+      {imageProp.map((image, index) => (
         <div
+          key={index}
           style={{ maxHeight: "36rem" }}
           className="object-center brightness-50"
         >
