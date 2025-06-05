@@ -21,10 +21,10 @@ function Cart() {
     })
       .then((response) => {
         if (response.status === 200) {
-          dispatch({ type: "DROP" }), setSuccess(true);
+          dispatch({ type: "DROP" }); setSuccess(true);
         }
       })
-      .catch((response) => response.status !== 200, setFail(true));
+      .catch((response) => response.status !== 200 && setFail(true));
   };
   let totalPrice = state.reduce((total, food) => total + food.price, 0);
 

@@ -30,6 +30,7 @@ function Signup() {
     if (res.success) {
       localStorage.setItem("token", res.authToken);
       localStorage.setItem("userEmail", credentials.email);
+      localStorage.setItem("isAdmin", false);
       router.push("/");
       alert("Account created successfully");
     } else {
@@ -69,6 +70,7 @@ function Signup() {
             <input
               name="name"
               type="text"
+              required
               placeholder="Enter your name"
               className="shadow appearance-none border border-gray-300 rounded w-full py-2 px-3 focus:border-indigo-700 text-gray-700 dark:text-gray-100  leading-tight focus:outline-none focus:shadow-outline"
               value={credentials.name}

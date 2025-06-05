@@ -18,16 +18,17 @@ export default async function handler(req, res) {
         password: securePass,
         location: req.body.location,
       })
-        .then((user) => {
+        .then(async (user) => {
           const data = {
             user: {
               id: user["_id"],
             },
           };
 
+          const isAdmin = await user.isAdmin;
           const authToken = jwt.sign(data, process.env.JWT_SECRET);
           success = true;
-          res.json({ success: success, authToken: authToken });
+          res.json({ success: success, authToken: authToken, isAdmin });
         })
         .catch((err) => {
           res.json({ error: err.message });
